@@ -8,8 +8,8 @@ class Student
     @email = email
     @phone_number = phone_number
   end
-    @@record = []
 
+  @@record = []
   def save
     @@record.prepend(self)
   end
@@ -19,19 +19,18 @@ class Student
   end
 
   def display
-    puts "Student ID: #{@id}, Name: #{@name}, Birth_date: #{@birth_date}, Email: #{@email}, Phone_Number: #{@phone_number}"
+    puts "Student ID: #{self.id}, Name: #{self.name}, Birth_date: #{self.birth_date}, Email: #{self.email}, Phone_Number: #{self.phone_number}"
   end
 
   def self.all
     @@record
   end
 
-  def self.find(student_id)
-    @@record.find{ |id| id == student_id }
+  def self.find(id)
+    @@record.find { |student| student.id == id }
   end
 
   def self.find_by_email(email)
-    @@record.find{|student_email| student_email == email}
+    @@record.find { |student| student.email == email }
   end
 end
-
