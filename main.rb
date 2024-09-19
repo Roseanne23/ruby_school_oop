@@ -4,7 +4,7 @@ def new_student
   student_id = Student.all.size + 1
   puts "Enter student name:"
   student_name = gets.chomp
-  puts "Enter student birth date:"
+  puts "Enter student birth date (mm/dd/yyyy):"
   student_birth_date = gets.chomp
   puts "Enter student email:"
   student_email = gets.chomp
@@ -21,3 +21,32 @@ def new_student
 end
 
 new_student
+def delete_student
+  puts "Delete a student"
+  puts "Input student ID you want to delete:"
+  student_id = gets.chomp.to_i
+  student = Student.find(student_id)
+
+  if student.destroy
+    unless Student.find(student_id)
+      puts "Student destroyed successfully!"
+    end
+  end
+end
+
+def menu
+  puts "Choose an action:"
+  puts "1. Add a new student"
+  puts "2. Delete a student"
+  answer = gets.chomp.to_i
+
+  case answer
+  when 1
+    added_student
+  when 2
+    delete_student
+  else
+    puts "Student not found"
+  end
+end
+menu
