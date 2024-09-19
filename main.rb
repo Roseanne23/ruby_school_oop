@@ -1,4 +1,5 @@
 require_relative 'student'
+
 def new_student
   puts "Add new student"
   student_id = Student.all.size + 1
@@ -26,27 +27,30 @@ def delete_student
   puts "Input student ID you want to delete:"
   student_id = gets.chomp.to_i
   student = Student.find(student_id)
-
-  if student.destroy
-    unless Student.find(student_id)
-      puts "Student destroyed successfully!"
-    end
+ if student.destroy
+  unless Student.find(student_id)
+  puts "Student destroyed successfully!"
   end
+ end
 end
-
 def menu
+  while true
   puts "Choose an action:"
   puts "1. Add a new student"
   puts "2. Delete a student"
+  puts "3. Exit"
   answer = gets.chomp.to_i
-
   case answer
   when 1
     added_student
   when 2
     delete_student
+  when 3
+    puts "Exit program"
+  break
   else
     puts "Student not found"
+  end
   end
 end
 menu
