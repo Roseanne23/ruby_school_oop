@@ -1,5 +1,21 @@
 require_relative 'student'
 require_relative 'course'
+require_relative 'subject'
+def new_subject
+  puts "Add new subject"
+  subject_id = Subject.all.size + 1
+  puts "Enter a new subject"
+  subject_name = gets.chomp
+  subject = Subject.new(subject_id, subject_name)
+  subject.save
+
+  if Subject.find(subject_id)
+   puts "Subject added successfully!"
+   puts subject.display
+  else
+   puts" Subject not added"
+  end
+end
 
 def new_course
   puts "Add new course"
@@ -68,7 +84,8 @@ def menu
     puts "Choose an action:"
     puts "1. Student Management"
     puts "2. Course Management"
-    puts "3. Exit"
+    puts "3. Subject Management"
+    puts "4. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -77,6 +94,8 @@ def menu
     when 2
       course_management
     when 3
+      subject_management
+    when 4
       puts "Exit program"
     break
     else
@@ -85,6 +104,22 @@ def menu
   end
 end
 
+def subject_management
+  while true
+    puts "Subject Management"
+    puts "1. Add a new subject"
+    puts "2. Exit"
+    answer = gets.chomp.to_i
+
+    case answer
+    when 1
+      new_subject
+    when 2
+      puts "Exit program"
+      break
+    end
+  end
+end
 def student_management
   while true
     puts "Student Management"
