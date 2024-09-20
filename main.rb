@@ -66,23 +66,17 @@ end
 def menu
   while true
     puts "Choose an action:"
-    puts "1. Add a new student"
-    puts "2. Delete a student"
-    puts "3. Add a new course"
-    puts "4. Delete a course"
-    puts "5. Exit"
+    puts "1. Student Management"
+    puts "2. Course Management"
+    puts "3. Exit"
     answer = gets.chomp.to_i
 
     case answer
     when 1
-      new_student
+      student_management
     when 2
-      delete_student
+      course_management
     when 3
-      new_course
-    when 4
-      delete_course
-    when 5
       puts "Exit program"
     break
     else
@@ -91,6 +85,25 @@ def menu
   end
 end
 
+def student_management
+  while true
+    puts "Student Management"
+    puts "1. Add a new student"
+    puts "2. Delete a student"
+    puts "3. Exit"
+    answer = gets.chomp.to_i
+
+    case answer
+    when 1
+      new_student
+    when 2
+      delete_student
+    when 3
+      puts "Exit program"
+      break
+    end
+  end
+end
 def course_management
   while true
     puts "Course Management"
@@ -105,6 +118,7 @@ def course_management
   when 2
     delete_course
   when 3
+    puts "Exit program"
   break
   end
   end
