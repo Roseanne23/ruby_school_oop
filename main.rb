@@ -17,6 +17,17 @@ def new_subject
   end
 end
 
+def delete_subject
+  puts "Delete a subject"
+  puts "Input subject ID to delete:"
+  subject_id = gets.chomp.to_i
+
+  if subject_id = Subject.find(subject_id)
+    subject_id.destroy
+    puts "Subject destroyed successfully!"
+  end
+end
+
 def new_course
   puts "Add new course"
   course_id = Course.all.size + 1
@@ -108,13 +119,16 @@ def subject_management
   while true
     puts "Subject Management"
     puts "1. Add a new subject"
-    puts "2. Exit"
+    puts "2. Delete a subject"
+    puts "3. Exit"
     answer = gets.chomp.to_i
 
     case answer
     when 1
       new_subject
     when 2
+      delete_subject
+    when 3
       puts "Exit program"
       break
     end
