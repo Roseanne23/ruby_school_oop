@@ -16,6 +16,19 @@ def new_course
     puts "Course not added"
   end
 end
+
+def delete_course
+  puts "Delete a course:"
+  puts "Input course ID:"
+  course_id = gets.chomp.to_i
+
+  if course = Course.find(course_id)
+    course.destroy
+    puts "Course destroyed successfully!"
+  else
+    puts "Course not found"
+  end
+end
 def new_student
   puts"Add new student"
   student_id = Student.all.size + 1
@@ -56,7 +69,8 @@ def menu
     puts "1. Add a new student"
     puts "2. Delete a student"
     puts "3. Add a new course"
-    puts "4. Exit"
+    puts "4. Delete a course"
+    puts "5. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -67,27 +81,32 @@ def menu
     when 3
       new_course
     when 4
+      delete_course
+    when 5
       puts "Exit program"
     break
     else
-    puts "Student not found"
+      puts "Student not found"
     end
   end
 end
+
 def course_management
   while true
     puts "Course Management"
     puts "1. Add a new course"
-    puts "2. Exit"
+    puts "2. Delete a course"
+    puts "3. Exit"
     answer = gets.chomp.to_i
 
   case answer
-    when 1
-      new_course
-    when 2
-      puts "Exit program"
-      break
-    end
+  when 1
+    new_course
+  when 2
+    delete_course
+  when 3
+  break
+  end
   end
 end
 menu
