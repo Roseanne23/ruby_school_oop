@@ -103,10 +103,7 @@ def new_course
   course.save
 
   if Course.find(course_id)
-    puts "Course added successfully!"
     puts course.display
-  else
-    puts "Course not added"
   end
 end
 
@@ -127,6 +124,19 @@ def display_courses
   puts "Display all courses"
   Course.all.each do |course|
     puts course.display
+  end
+end
+
+def edit_course
+  puts "Input Course ID to edit: "
+  id = gets.chomp.to_i
+  course = Course.find(id)
+  if course
+    puts "Input New Course Name: "
+    course.name = gets.chomp
+    course.save
+  else
+    puts "Course not found."
   end
 end
 
@@ -251,7 +261,8 @@ def course_management
     puts "1. Add a new course"
     puts "2. Delete a course"
     puts "3. Display all courses"
-    puts "4. Exit"
+    puts "4. Edit a course"
+    puts "5. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -262,6 +273,8 @@ def course_management
     when 3
       display_courses
     when 4
+      edit_course
+    when 5
       puts "Exit program"
       break
     end
