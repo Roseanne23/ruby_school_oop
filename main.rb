@@ -27,6 +27,19 @@ def new_teacher
   end
 end
 
+def delete_teacher
+  puts "Delete a teacher"
+  puts "Input teacher ID to delete:"
+  teacher_id = gets.chomp.to_i
+
+  if teacher = Teacher.find(teacher_id)
+    teacher.destroy
+    puts "Teacher destroyed successfully."
+  else
+    puts "Teacher ID not destroyed."
+  end
+end
+
 def new_subject
   puts "Add new subject"
   subject_id = Subject.all.size + 1
@@ -148,14 +161,15 @@ def teacher_management
   while true
     puts "Teacher Management"
     puts "1. Add a new teacher"
-    puts "2. Exit"
+    puts "2. Delete a teacher"
+    puts "3. Exit"
     answer = gets.chomp.to_i
 
     case answer
     when 1
       new_teacher
     when 2
-      delete_subject
+      delete_teacher
     when 3
       puts "Exit program"
       break
