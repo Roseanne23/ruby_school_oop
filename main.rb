@@ -40,6 +40,13 @@ def delete_teacher
   end
 end
 
+def display_teachers
+  puts "Display all teachers"
+  Teacher.all.each do |teacher|
+    puts teacher.display
+  end
+end
+
 def new_subject
   puts "Add new subject"
   subject_id = Subject.all.size + 1
@@ -64,6 +71,13 @@ def delete_subject
   if subject = Subject.find(subject_id)
     subject.destroy
     puts "Subject destroyed successfully!"
+  end
+end
+
+def display_subjects
+  puts "Display all subjects"
+  Subject.all.each do |subject|
+    puts subject.display
   end
 end
 
@@ -95,6 +109,14 @@ def delete_course
     puts "Course not found"
   end
 end
+
+def display_courses
+  puts "Display all courses"
+  Course.all.each do |course|
+    puts course.display
+  end
+end
+
 def new_student
   puts"Add new student"
   student_id = Student.all.size + 1
@@ -116,8 +138,6 @@ def new_student
   end
 end
 
-new_student
-
 def delete_student
   puts "Delete a student"
   puts "Input student ID you want to delete:"
@@ -126,6 +146,13 @@ def delete_student
   if student = Student.find(student_id)
     student.destroy
     puts "Student destroyed successfully!"
+  end
+end
+
+def display_students
+  puts "Display all students"
+  Student.all.each do |student|
+    puts student.display
   end
 end
 
@@ -162,7 +189,8 @@ def teacher_management
     puts "Teacher Management"
     puts "1. Add a new teacher"
     puts "2. Delete a teacher"
-    puts "3. Exit"
+    puts "3. Display all teachers"
+    puts "4. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -171,6 +199,8 @@ def teacher_management
     when 2
       delete_teacher
     when 3
+      display_teachers
+    when 4
       puts "Exit program"
       break
     end
@@ -181,7 +211,8 @@ def subject_management
     puts "Subject Management"
     puts "1. Add a new subject"
     puts "2. Delete a subject"
-    puts "3. Exit"
+    puts "3. Display all subjects"
+    puts "4. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -190,36 +221,21 @@ def subject_management
     when 2
       delete_subject
     when 3
+      display_subjects
+    when 4
       puts "Exit program"
       break
     end
   end
 end
-def student_management
-  while true
-    puts "Student Management"
-    puts "1. Add a new student"
-    puts "2. Delete a student"
-    puts "3. Exit"
-    answer = gets.chomp.to_i
 
-    case answer
-    when 1
-      new_student
-    when 2
-      delete_student
-    when 3
-      puts "Exit program"
-      break
-    end
-  end
-end
 def course_management
   while true
     puts "Course Management"
     puts "1. Add a new course"
     puts "2. Delete a course"
-    puts "3. Exit"
+    puts "3. Display all courses"
+    puts "4. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -228,6 +244,31 @@ def course_management
     when 2
       delete_course
     when 3
+      display_courses
+    when 4
+      puts "Exit program"
+      break
+    end
+  end
+end
+
+def student_management
+  while true
+    puts "Student Management"
+    puts "1. Add a new student"
+    puts "2. Delete a student"
+    puts "3. Display all students"
+    puts "4. Exit"
+    answer = gets.chomp.to_i
+
+    case answer
+    when 1
+      new_student
+    when 2
+      delete_student
+    when 3
+      display_students
+    when 4
       puts "Exit program"
       break
     end
