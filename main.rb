@@ -10,10 +10,10 @@ def new_subject
   subject.save
 
   if Subject.find(subject_id)
-   puts "Subject added successfully!"
-   puts subject.display
+    puts "Subject added successfully!"
+    puts subject.display
   else
-   puts" Subject not added"
+    puts" Subject not added"
   end
 end
 
@@ -22,8 +22,8 @@ def delete_subject
   puts "Input subject ID to delete:"
   subject_id = gets.chomp.to_i
 
-  if subject_id = Subject.find(subject_id)
-    subject_id.destroy
+  if subject = Subject.find(subject_id)
+    subject.destroy
     puts "Subject destroyed successfully!"
   end
 end
@@ -85,8 +85,8 @@ def delete_student
   student_id = gets.chomp.to_i
 
   if student = Student.find(student_id)
-     student.destroy
-     puts "Student destroyed successfully!"
+    student.destroy
+    puts "Student destroyed successfully!"
   end
 end
 
@@ -108,7 +108,7 @@ def menu
       subject_management
     when 4
       puts "Exit program"
-    break
+      break
     else
       puts "Student not found"
     end
@@ -161,15 +161,15 @@ def course_management
     puts "3. Exit"
     answer = gets.chomp.to_i
 
-  case answer
-  when 1
-    new_course
-  when 2
-    delete_course
-  when 3
-    puts "Exit program"
-  break
-  end
+    case answer
+    when 1
+      new_course
+    when 2
+      delete_course
+    when 3
+      puts "Exit program"
+      break
+    end
   end
 end
 menu
