@@ -74,6 +74,19 @@ def delete_subject
   end
 end
 
+def edit_subject
+  puts "Input Subject ID to edit: "
+  id = gets.chomp.to_i
+  subject = Subject.find(id)
+  if subject
+    puts "Enter New Subject Name: "
+    subject.name = gets.chomp
+    subject.save
+  else
+    puts "Subject not found."
+  end
+end
+
 def display_subjects
   puts "Display all subjects"
   Subject.all.each do |subject|
@@ -212,7 +225,8 @@ def subject_management
     puts "1. Add a new subject"
     puts "2. Delete a subject"
     puts "3. Display all subjects"
-    puts "4. Exit"
+    puts "4. Edit a subject"
+    puts "5. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -223,6 +237,8 @@ def subject_management
     when 3
       display_subjects
     when 4
+      edit_subject
+    when 5
       puts "Exit program"
       break
     end
