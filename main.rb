@@ -1,6 +1,32 @@
 require_relative 'student'
 require_relative 'course'
 require_relative 'subject'
+require_relative 'teacher'
+
+def new_teacher
+  puts "Add a new teacher"
+  teacher_id = Teacher.all.size + 1
+  puts "Input teacher name:"
+  teacher_name = gets.chomp
+  puts "Input teacher birthdate (mm/dd/yyyy):"
+  teacher_birthdate = gets.chomp
+  puts "Input teacher email:"
+  teacher_email = gets.chomp
+  puts "Input teacher phone number:"
+  teacher_phone_number = gets.chomp
+  puts "Input teacher department:"
+  teacher_department = gets.chomp
+  teacher = Teacher.new(teacher_id, teacher_name, teacher_birthdate, teacher_email, teacher_phone_number, teacher_department)
+  teacher.save
+
+  if Teacher.find(teacher_id)
+    puts "Teacher added successfully!"
+    puts teacher.display
+  else
+    puts "Teacher not added."
+  end
+end
+
 def new_subject
   puts "Add new subject"
   subject_id = Subject.all.size + 1
@@ -96,7 +122,8 @@ def menu
     puts "1. Student Management"
     puts "2. Course Management"
     puts "3. Subject Management"
-    puts "4. Exit"
+    puts "4. Teacher Management"
+    puts "5. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -107,6 +134,8 @@ def menu
     when 3
       subject_management
     when 4
+      teacher_management
+    when 5
       puts "Exit program"
       break
     else
@@ -115,6 +144,24 @@ def menu
   end
 end
 
+def teacher_management
+  while true
+    puts "Teacher Management"
+    puts "1. Add a new teacher"
+    puts "2. Exit"
+    answer = gets.chomp.to_i
+
+    case answer
+    when 1
+      new_teacher
+    when 2
+      delete_subject
+    when 3
+      puts "Exit program"
+      break
+    end
+  end
+end
 def subject_management
   while true
     puts "Subject Management"
