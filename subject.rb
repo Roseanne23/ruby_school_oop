@@ -2,13 +2,21 @@ class Subject
   attr_accessor :id, :name, :deleted_at
 
   @@record = []
-  def initialize(id, name, deleted_at = nil)
+  def initialize(id, name)
    @id = id
    @name = name
-   @deleted_at = deleted_at
+   @deleted_at = nil
   end
   def save
-   @@record.prepend(self)
+    existing_record = @@record.find { |subject| subject.id == @id }
+    if existing_record
+      existing_record.name = @name
+      existing_record.deleted_at = @deleted_at
+      puts "Subject updated successfully!"
+    else
+      @@record << self
+      puts "Subject created successfully!"
+    end
   end
 
   def destroy
