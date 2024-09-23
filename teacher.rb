@@ -1,18 +1,30 @@
 class Teacher
   attr_accessor :id, :name, :birth_date, :email, :phone_number, :department, :deleted_at
   @@record = []
-  def initialize(id, name, birth_date, email, phone_number, department, deleted_at = nil)
+  def initialize(id, name, birth_date, email, phone_number, department)
     @id = id
     @name = name
     @birth_date = birth_date
     @email = email
     @phone_number = phone_number
     @department = department
-    @deleted_at = deleted_at
+    @deleted_at = nil
   end
 
   def save
-    @@record.prepend(self)
+    existing_record = @@record.find { |teacher| teacher.id == @id }
+    if existing_record
+      existing_record.name = @name
+      existing_record.birth_date = @birth_date
+      existing_record.email = @email
+      existing_record.phone_number = @phone_number
+      existing_record.department = @department
+      existing_record.deleted_at = @deleted_at
+      puts "Teacher updated successfully!"
+    else
+      @@record << self
+      puts "Teacher added successfully!"
+    end
   end
   def destroy
     @deleted_at = Time.now

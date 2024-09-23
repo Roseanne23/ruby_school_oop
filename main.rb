@@ -20,7 +20,6 @@ def new_teacher
   teacher.save
 
   if Teacher.find(teacher_id)
-    puts "Teacher added successfully!"
     puts teacher.display
   else
     puts "Teacher not added."
@@ -44,6 +43,27 @@ def display_teachers
   puts "Display all teachers"
   Teacher.all.each do |teacher|
     puts teacher.display
+  end
+end
+
+def edit_teacher
+  puts "Input Teacher ID to edit: "
+  id = gets.chomp.to_i
+  teacher = Teacher.find(id)
+  if teacher
+    puts "Enter New Teacher Name: "
+    teacher.name = gets.chomp
+    puts "Enter New Birth Date: "
+    teacher.birth_date = gets.chomp
+    puts "Enter New Email: "
+    teacher.email = gets.chomp
+    puts "Enter New Phone Number: "
+    teacher.phone_number = gets.chomp
+    puts "Enter New Department: "
+    teacher.department = gets.chomp
+    teacher.save
+  else
+    puts "Teacher not found."
   end
 end
 
@@ -213,7 +233,8 @@ def teacher_management
     puts "1. Add a new teacher"
     puts "2. Delete a teacher"
     puts "3. Display all teachers"
-    puts "4. Exit"
+    puts "4. Edit a teacher"
+    puts "5. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -224,6 +245,8 @@ def teacher_management
     when 3
       display_teachers
     when 4
+      edit_teacher
+    when 5
       puts "Exit program"
       break
     end
