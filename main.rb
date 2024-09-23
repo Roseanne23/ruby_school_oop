@@ -160,6 +160,10 @@ def edit_course
   end
 end
 
+def display_available_courses
+  puts "Available Courses:"
+  Course.all.each { |course| puts "ID: #{course.id}, Name: #{course.name}" }
+end
 def new_student
   puts"Add new student"
   student_id = Student.all.size + 1
@@ -172,11 +176,14 @@ def new_student
   puts "Enter student phone number:"
   student_phone_number = gets.chomp
 
-  student =Student.new(student_id, student_name, student_birth_date, student_email, student_phone_number)
+  display_available_courses
+  puts "Input Course ID for the student: "
+  course_id = gets.chomp.to_i
+  student = Student.new(student_id, student_name, student_birth_date, student_email, student_phone_number, course_id)
   student.save
 
   if Student.find(student_id)
-    puts "Student added successfully!"
+    puts "Course added successfully!"
     student.display
   end
 end
@@ -213,6 +220,10 @@ def edit_student
     student.email = gets.chomp
     puts "Input New Phone Number: "
     student.phone_number = gets.chomp
+
+    display_available_courses
+    puts "Input New Course ID for the student: "
+    student.course_id = gets.chomp.to_i
     student.save
   else
     puts "Student not found."
