@@ -199,6 +199,26 @@ def display_students
   end
 end
 
+def edit_student
+  puts "Input Student ID to edit: "
+  id = gets.chomp.to_i
+  student = Student.find(id)
+
+  if student
+    puts "Input New Student Name: "
+    student.name = gets.chomp
+    puts "Input New Birth Date: "
+    student.birth_date = gets.chomp
+    puts "Input New Email: "
+    student.email = gets.chomp
+    puts "Input New Phone Number: "
+    student.phone_number = gets.chomp
+    student.save
+  else
+    puts "Student not found."
+  end
+  end
+
 def menu
   while true
     puts "Choose an action:"
@@ -310,7 +330,8 @@ def student_management
     puts "1. Add a new student"
     puts "2. Delete a student"
     puts "3. Display all students"
-    puts "4. Exit"
+    puts "4. Edit a student"
+    puts "5. Exit"
     answer = gets.chomp.to_i
 
     case answer
@@ -321,6 +342,8 @@ def student_management
     when 3
       display_students
     when 4
+      edit_student
+    when 5
       puts "Exit program"
       break
     end
