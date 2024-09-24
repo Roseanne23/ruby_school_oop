@@ -10,10 +10,44 @@ def display_course_details
   course = Course.find(course_id)
 
   if course
-    puts "Course Details: ID: #{course.id}, Name: #{course.name}"
-    display_course_subjects(course_id)
+    course.display
+    while true
+      puts "1. View Students"
+      puts "2. View Subjects"
+      puts "3. Back to Course Management"
+      puts "Pease choose:"
+      answer = gets.chomp.to_i
+
+      case answer
+      when 1
+        display_course_students(course)
+      when 2
+        display_course_subjects(course_id)
+      when 3
+        break
+        puts "Error"
+      end
+    end
+  end
+end
+
+def display_course_students(course)
+  puts "Students added in course ID #{course.id}"
+  students = course.students
+    if students.empty?
+      puts "No students enrolled in this course."
+    else
+      students.each { |student| student.display }
+  end
+end
+
+def display_course_subjects(course_id)
+  subject = CourseSubject.find_by_course_id(course_id)
+  if subject.empty?
+    puts "No subject added to course."
   else
-    puts "Course not found."
+    puts "Subjects assigned to Course ID #{course_id}:"
+    subject.each { |subject| puts "Subject ID: #{subject.id}, Name: #{subject.name}" }
   end
 end
 
@@ -242,14 +276,14 @@ def new_student
   puts "Enter student phone number:"
   student_phone_number = gets.chomp
 
-  display_available_courses
+  display_courses
   puts "Input Course ID for the student: "
   course_id = gets.chomp.to_i
+
   student = Student.new(student_id, student_name, student_birth_date, student_email, student_phone_number, course_id)
   student.save
 
   if Student.find(student_id)
-    puts "Course added successfully!"
     student.display
   end
 end

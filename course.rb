@@ -34,4 +34,13 @@ class Course
   def self.find(id)
     @@record.find { |course| course.id == id }
   end
+
+  def students
+    Student.all.select { |student| student.course_id == @id }
+  end
+
+  def subjects
+    course_subjects = CourseSubject.find_by_course_id(@id)
+    course_subjects.map { |cs| Subject.find(cs.subject_id) }.compact
+  end
 end
