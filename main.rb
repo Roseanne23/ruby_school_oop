@@ -3,6 +3,16 @@ require_relative 'course'
 require_relative 'subject'
 require_relative 'teacher'
 require_relative 'course_subject'
+require_relative 'student_subject'
+
+def enroll_student_in_course_subjects(student_id, course_id)
+  course = Course.find(course_id)
+  return unless course
+  course.subjects.each do |subject|
+    student_subject = StudentSubject.new(nil, student_id, subject.id) # id will be handled by the storage logic
+    student_subject.save
+  end
+end
 
 def display_course_details
   puts "Input Course ID to display details: "
@@ -284,9 +294,10 @@ def new_student
   student.save
 
   if Student.find(student_id)
-    student.display
+    enroll_student_in_course_subjects(student_id, course_id)
+    puts "Student added and enrolled successfully!"
   end
-end
+  end
 
 def delete_student
   puts "Delete a student"
@@ -321,7 +332,7 @@ def edit_student
     puts "Input New Phone Number: "
     student.phone_number = gets.chomp
 
-    display_available_courses
+    display_courses
     puts "Input New Course ID for the student: "
     student.course_id = gets.chomp.to_i
     student.save
