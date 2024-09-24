@@ -10,19 +10,23 @@ class StudentSubject
 
   def save
     existing_record = @@record.find { |record| record.id == @id }
+    subject = Subject.find(@subject_id)
+    subject_name = subject ? subject.name : "Unknown"
+
      if existing_record
         existing_record.student_id = @student_id
         existing_record.subject_id = @subject_id
-        puts "StudentSubject updated successfully!"
+        puts "#{subject_name} subject added"
 
         else
         @@record << self
-        puts "StudentSubject created successfully!"
+        puts "Subject added"
      end
   end
+
   def destroy
     @@record.delete(self)
-    puts "StudentSubject deleted successfully!"
+    puts "#{subject_name} is deleted"
   end
 
   def display
@@ -34,9 +38,11 @@ class StudentSubject
   def self.all
     @@record
   end
+
   def self.find(id)
     @@record.find { |record| record.id == id }
   end
+
   def self.find_by_student_id(student_id)
     @@record.select { |record| record.student_id == student_id }
   end
