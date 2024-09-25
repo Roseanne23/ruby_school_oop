@@ -17,10 +17,8 @@ class StudentSubject
         existing_record.student_id = @student_id
         existing_record.subject_id = @subject_id
         puts "#{subject_name} subject added"
-
         else
         @@record << self
-        puts "Subject added"
      end
   end
 
@@ -46,4 +44,5 @@ class StudentSubject
   def self.find_by_student_id(student_id)
     @@record.select { |record| record.student_id == student_id }
   end
+
 end

@@ -15,7 +15,6 @@ class Subject
       puts "Subject updated successfully!"
     else
       @@record << self
-      puts "Subject created successfully!"
     end
   end
 

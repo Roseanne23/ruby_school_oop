@@ -24,7 +24,6 @@ class Student
       puts "Student updated successfully!"
     else
       @@record << self
-      puts "Student added successfully!"
     end
   end
 
@@ -41,6 +40,11 @@ class Student
     @@record.select { |student| student.deleted_at.nil? }
   end
 
+  def subjects
+    student_subjects = StudentSubject.find_by_student_id(@id)
+    student_subjects.map { |ss| Subject.find(ss.subject_id) }
+  end
+
   def self.find(id)
     @@record.find { |student| student.id == id }
   end
@@ -48,4 +52,16 @@ class Student
   def self.find_by_email(email)
     @@record.find { |student| student.email == email }
   end
+
+  def enroll_in_course_subjects
+    course = Course.find(@course_id)
+    return course
+    course.subjects.each do |subject|
+      student_subject = StudentSubject.new(nil, @id, subject.id)
+      student_subject.save
+    end
+  end
 end
+
+
+

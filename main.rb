@@ -5,11 +5,29 @@ require_relative 'teacher'
 require_relative 'course_subject'
 require_relative 'student_subject'
 
+def display_student_details_with_subjects
+  puts "Input Student ID to display details: "
+  student_id = gets.chomp.to_i
+  student = Student.find(student_id)
+
+  if student
+    puts "Student Details:"
+    puts student.display
+    puts "Enrolled Subjects:"
+    subjects = student.subjects
+    subjects.each do |subject|
+      puts "Subject ID: #{subject.id}, Name: #{subject.name}"
+    end
+  else
+    puts "No enrolled subjects."
+  end
+end
+
 def enroll_student_in_course_subjects(student_id, course_id)
   course = Course.find(course_id)
-  return unless course
+  return course
   course.subjects.each do |subject|
-    student_subject = StudentSubject.new(nil, student_id, subject.id) # id will be handled by the storage logic
+    student_subject = StudentSubject.new(nil, student_id, subject.id)
     student_subject.save
   end
 end
@@ -20,79 +38,58 @@ def display_course_details
   course = Course.find(course_id)
 
   if course
-    course.display
-    while true
-      puts "1. View Students"
-      puts "2. View Subjects"
-      puts "3. Back to Course Management"
-      puts "Pease choose:"
-      answer = gets.chomp.to_i
-
-      case answer
-      when 1
-        display_course_students(course)
-      when 2
-        display_course_subjects(course_id)
-      when 3
-        break
-        puts "Error"
-      end
-    end
+    puts "Course Details: ID: #{course.id}, Name: #{course.name}"
+    display_course_subjects(course_id)
+  else
+    puts "Course not found."
   end
 end
 
 def display_course_students(course)
   puts "Students added in course ID #{course.id}"
   students = course.students
-    if students.empty?
-      puts "No students enrolled in this course."
-    else
-      students.each { |student| student.display }
-  end
-end
-
-def display_course_subjects(course_id)
-  subject = CourseSubject.find_by_course_id(course_id)
-  if subject.empty?
-    puts "No subject added to course."
+  if students.empty?
+    puts "No students enrolled in this course."
   else
-    puts "Subjects assigned to Course ID #{course_id}:"
-    subject.each { |subject| puts "Subject ID: #{subject.id}, Name: #{subject.name}" }
+    students.each { |student| student.display }
   end
 end
 
 def display_course_subjects(course_id)
   subjects = CourseSubject.find_by_course_id(course_id)
-  if subjects.empty?
-    puts "No subjects available."
-  else
+
+  if subjects
     puts "Subjects successfully assigned to Course ID #{course_id}:"
+  else
+    puts "No subjects available."
     subjects.each { |subject| puts subject.display }
   end
 end
+
 def add_subjects_to_course
   display_courses
   puts "Input Course ID to add subjects: "
   course_id = gets.chomp.to_i
 
   while true
-    puts "Input Subject ID to add, (type exit to finish): "
-    input = gets.chomp
-    break if input.downcase == 'exit'
+    puts "Input Subject to add, (type exit if done): "
+    answer = gets.chomp
+    puts "Subject added successfully"
+    break if answer.downcase == 'exit'
 
-    subject_id = input.to_i
+    subject_id = answer.to_i
     if Subject.find(subject_id)
       existing_record = CourseSubject.all.find { |cs| cs.course_id == course_id && cs.subject_id == subject_id }
       unless existing_record
-        cs_id = CourseSubject.all.size + 1
-        course_subject = CourseSubject.new(cs_id, course_id, subject_id)
+        course_id = CourseSubject.all.size + 1
+        course_subject = CourseSubject.new(course_id, subject_id)
         course_subject.save
-      else
-        puts "Subject already exists."
+        puts CourseSubject.display
       end
     end
   end
 end
+
 def remove_subjects_from_course
   puts "Input course ID to remove subject: "
   course_id = gets.chomp.to_i
@@ -102,7 +99,7 @@ def remove_subjects_from_course
   else
     while true
       display_course_subjects(course_id)
-      puts "Input Subject ID to remove (type exit to finish): "
+      puts "Input Subject to remove (type exit if done): "
       input = gets.chomp
       break if input.downcase == 'exit'
       subject_id = input.to_i
@@ -193,7 +190,7 @@ def new_subject
     puts "Subject added successfully!"
     puts subject.display
   else
-    puts" Subject not added"
+    puts " Subject not added"
   end
 end
 
@@ -275,7 +272,7 @@ def edit_course
 end
 
 def new_student
-  puts"Add new student"
+  puts "Add new student"
   student_id = Student.all.size + 1
   puts "Enter student name:"
   student_name = gets.chomp
@@ -297,7 +294,7 @@ def new_student
     enroll_student_in_course_subjects(student_id, course_id)
     puts "Student added and enrolled successfully!"
   end
-  end
+end
 
 def delete_student
   puts "Delete a student"
@@ -339,7 +336,7 @@ def edit_student
   else
     puts "Student not found."
   end
-  end
+end
 
 def menu
   while true
@@ -394,6 +391,7 @@ def teacher_management
     end
   end
 end
+
 def subject_management
   while true
     puts "Subject Management"
@@ -461,8 +459,9 @@ def student_management
     puts "1. Add a new student"
     puts "2. Delete a student"
     puts "3. Display all students"
-    puts "4. Edit a student"
-    puts "5. Back to School Management"
+    puts "4. Display student details with subjects"
+    puts "5. Edit a student"
+    puts "6. Back to School Management"
     answer = gets.chomp.to_i
 
     case answer
@@ -473,11 +472,14 @@ def student_management
     when 3
       display_students
     when 4
-      edit_student
+      display_student_details_with_subjects
     when 5
+      edit_student
+    when 6
       puts "Exit program"
       break
     end
   end
 end
+
 menu
