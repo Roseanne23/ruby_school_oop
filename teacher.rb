@@ -1,4 +1,5 @@
-class Teacher
+require_relative 'college'
+class Teacher < College
   attr_accessor :id, :name, :birth_date, :email, :phone_number, :department, :deleted_at
   @@record = []
   def initialize(id, name, birth_date, email, phone_number, department)

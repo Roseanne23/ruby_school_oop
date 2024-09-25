@@ -1,4 +1,6 @@
-class Student
+
+require_relative 'college'
+class Student < College
   attr_accessor :id, :name, :birth_date, :email, :phone_number, :course_id, :deleted_at
 
   def initialize(id, name, birth_date, email, phone_number, course_id)
